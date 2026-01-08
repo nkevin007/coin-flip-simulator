@@ -19,6 +19,7 @@ function App() {
     }
   };
 
+  // Used by preset buttons (5, 10, 30, 100) → ACCUMULATE
   const flipMultiple = (count: number) => {
     let h = 0;
     let t = 0;
@@ -29,6 +30,20 @@ function App() {
 
     setHeads((prev) => prev + h);
     setTails((prev) => prev + t);
+    setLastFlip(null);
+  };
+
+  // Used ONLY for custom input → RESET then run exactly N flips
+  const runCustomFlips = () => {
+    let h = 0;
+    let t = 0;
+
+    for (let i = 0; i < customFlips; i++) {
+      Math.random() < 0.5 ? h++ : t++;
+    }
+
+    setHeads(h);
+    setTails(t);
     setLastFlip(null);
   };
 
@@ -66,9 +81,7 @@ function App() {
           onChange={(e) => setCustomFlips(Number(e.target.value))}
           style={{ width: "80px", marginRight: "8px" }}
         />
-        <button onClick={() => flipMultiple(customFlips)}>
-          Run Custom Flips
-        </button>
+        <button onClick={runCustomFlips}>Run Custom Flips</button>
       </div>
 
       <h2>Results:</h2>
